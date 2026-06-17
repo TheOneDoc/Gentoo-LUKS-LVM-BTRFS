@@ -91,8 +91,8 @@ umount /mnt/gentoo
 mount -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@ /dev/system/root /mnt/gentoo
 chmod 755 /mnt/gentoo
 mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@root /dev/system/root /mnt/gentoo/root
-mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@var@log /dev/system/root /mnt/gentoo/root/var/log
-mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@snapshots /dev/system/root /mnt/gentoo/root/.snapshots
+mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@var@log /dev/system/root /mnt/gentoo/var/log
+mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@snapshots /dev/system/root /mnt/gentoo/.snapshots
 mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@home /dev/system/root /mnt/gentoo/home
 mount -m -t vfat /dev/vda1 /mnt/gentoo/boot
 swapon /dev/system/swap
@@ -161,6 +161,7 @@ sync-uri = rsync://eu.mirror.ionos.com/gentoo-portage
 emerge --sync
 eselect news list
 eselect news read
+eselect news purge
 #let's select the system profile
 eselect profile list
 eselect profile set 7
@@ -194,16 +195,18 @@ EOF
 #tell portage that we want binary packages
 
 cat <<EOF >> /etc/portage/make.conf
-# Appending getbinpkg to the list of values within the FEATURES variable
+# Appending getbinpkg to the list of values within the EMERGE_DEFAULT_OPTS variable
 EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --getbinpkg"
 BINPKG_FORMAT="gpkg"
+USE="${USE} bindist"
 EOF
 
 #setup keyrings
 getuto
 
-emerge --ask --oneshot app-portage/cpuid2cpuflags
-echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
+#we don#t do that to not mess with binhost packages
+#emerge --ask --oneshot app-portage/cpuid2cpuflags
+#echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
 
 #Make sure that the system uses the right GPU (virgl, d3d12, amdgpu radeonsi, intel, nouveau, nvidia)
 echo "*/* VIDEO_CARDS: -* virgl" > /etc/portage/package.use/00video_cards
@@ -215,7 +218,7 @@ echo 'ACCEPT_LICENSE="-* @FREE @BINARY-REDISTRIBUTABLE"' >> /etc/portage/make.co
 emerge --ask --verbose --update --deep --newuse --getbinpkg @world
 
 #or build from source
-emerge --ask --verbose --update --deep --changed-use --getbinpkg=n @world
+#emerge --ask --verbose --update --deep --changed-use --getbinpkg=n @world
 
 emerge --ask --pretend --depclean
 emerge --ask --depclean
@@ -307,7 +310,7 @@ rc-update add sshd default
 #bash
 emerge --ask app-shells/bash-completion
 
-emerge --ask --getbinpkg=n sys-fs/cryptsetup
+emerge --ask sys-fs/cryptsetup
 emerge --ask sys-fs/btrfs-progs
 emerge --ask sys-fs/dosfstools
 emerge --ask sys-fs/xfsprogs
@@ -316,7 +319,7 @@ emerge --ask sys-fs/ntfs3g
 emerge --ask --getbinpkg=n sys-fs/zfs
 emerge --ask sys-fs/f2fs-tools
 emerge --ask sys-fs/mdadm
-emerge --ask --getbinpkg=n dev-python/zstandard
+emerge --ask dev-python/zstandard
 emerge --ask sys-block/io-scheduler-udev-rules
 emerge --ask app-portage/gentoolkit
 
