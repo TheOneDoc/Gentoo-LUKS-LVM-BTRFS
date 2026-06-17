@@ -5,7 +5,8 @@
 #                   https       IPv4 + IPv6 https://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/
 #                   rsync       IPv4 + IPv6 rsync://eu.mirror.ionos.com/gentoo/
 
-
+We use the current Gentoo Live Image as our installation envirnoment
+https://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-livegui-amd64/livegui-amd64-20260510T170106Z.iso
 
 #Drive to install to /dev/vd?, /dev/sd?, #/dev/nvme?n?, /dev/mmcblk?
 #/dev/vda
