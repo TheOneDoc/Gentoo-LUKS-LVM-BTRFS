@@ -1,3 +1,4 @@
+```
 #Gentoo Mirror
 #Name               Protocol    IPv4/v6	    URL
 #Ionos SE (1&1 )    http        IPv4 + IPv6 http://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/
@@ -416,6 +417,6 @@ cat << 'EOF' > /etc/sddm.conf
 MaximumUid=60000
 MinimumUid=1000
 EOF
-
+```
 #reboot time
 sudo reboot
