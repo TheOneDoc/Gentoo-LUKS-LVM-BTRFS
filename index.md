@@ -53,7 +53,9 @@ parted /dev/vda print
 mkfs.fat -F 32 -n EFI /dev/vda1
 cryptsetup luksFormat /dev/vda2
 cryptsetup luksOpen /dev/vda2 crypt
+#Skip if we install on a HDD
 cryptsetup refresh --persistent --allow-discards crypt
+#
 vgcreate system /dev/mapper/crypt
 #I like swap to be 2.5 * RAM Size
 lvcreate --name swap -L 40G system
@@ -104,12 +106,12 @@ tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner -C /mnt/gentoo
 cat <<'EOF' >  /etc/portage/make.conf
 # Please consult /usr/share/portage/config/make.conf.example for a more
 # detailed example.
-COMMON_FLAGS="-march=native -O2 -pipe"
+COMMON_FLAGS="-march=x86-64-v3 -O2 -pipe"
 CFLAGS="${COMMON_FLAGS}"
 CXXFLAGS="${COMMON_FLAGS}"
 FCFLAGS="${COMMON_FLAGS}"
 FFLAGS="${COMMON_FLAGS}"
-RUSTFLAGS="${RUSTFLAGS} -C target-cpu=native"
+RUSTFLAGS="${RUSTFLAGS} -C target-cpu=x86-64-v3"
 #conf for 8c/16t with 32 GB RAM
 MAKEOPTS="-j8 -l17"
 
@@ -433,7 +435,7 @@ Note: because someone asked about the VM config, here you go
       <libosinfo:os id="http://almalinux.org/almalinux/10"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit="KiB">16777216</memory>
+  <memory unit="KiB">33554432</memory>
   <currentMemory unit="KiB">16777216</currentMemory>
   <memoryBacking>
     <source type="memfd"/>
