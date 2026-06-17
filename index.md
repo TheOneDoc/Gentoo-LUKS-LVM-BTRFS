@@ -423,6 +423,7 @@ sudo reboot
 Note: because someone asked about the VM config, here you go
 ---
 ```
+```
 <domain type="kvm">
   <name>Gentoo2</name>
   <uuid>d33ee995-4d99-4763-a888-e4f0166dc495</uuid>
@@ -623,6 +624,7 @@ Note: because someone asked about the VM config, here you go
     </rng>
   </devices>
 </domain>
+```
 ```
 ---
 ```
