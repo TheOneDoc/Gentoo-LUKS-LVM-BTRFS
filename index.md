@@ -13,7 +13,7 @@ In this example our target system is a [QEMU](https://en.wikipedia.org/wiki/QEMU
 - CPU x86-64-v3, 8 Cores 16 Threads 
 - Ram 16 GB
 - Drive 200GB
-- booted via (Unified Extensible Firmware Interface)[https://en.wikipedia.org/wiki/UEFI] (UEFI)
+- booted via [Unified Extensible Firmware Interface](https://en.wikipedia.org/wiki/UEFI) (UEFI)
 - System Language EN/DE
 
 You have to adjust accordingly for your own needs.
