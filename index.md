@@ -79,7 +79,7 @@ Note: In the context of Gentoo linux __"current"__ refferencs the rolling releas
 https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20260614T170130Z.tar.xz
 ```
 
-###Prepare the Installation Envirnoment
+### Prepare the Installation Envirnoment
 
 Note:as long as we are in our Installation Envirnoment we will use the [__sudo__](https://en.wikipedia.org/wiki/Sudo) command to execute tasks with root privileges.
 
@@ -102,11 +102,12 @@ This step can be skipped if the installation is done locally
 ```
 sudo rc-service sshd start
 ```
-####Get the IP Address of our Install Environment
+#### Get the IP Address of our Install Environment
 ```
 ip a
 ```
 
+```
 #now either continue in the console or ssh into the machine
 sudo -i
 #optional
