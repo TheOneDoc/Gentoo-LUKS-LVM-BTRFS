@@ -241,7 +241,7 @@ cleanup
 ```
 umount /mnt/gentoo
 ```
-#### Mount Filesystems and swap for use in the chroot Environment
+#### Mount Filesystems for use in the chroot Environment
 ```
 mount -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@ /dev/system/root /mnt/gentoo
 chmod 755 /mnt/gentoo
@@ -252,12 +252,16 @@ mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@home /dev/system/root
 mount -m -t vfat /dev/vda1 /mnt/gentoo/boot
 ```
 
-#let's bootstrap our new gentoo system
+###Bootstrap Gentoo Linux
+
+Consult the [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage) for vaildation steps and in depth explanations.
+
+Reminder: Make sure you use the correct URL for your chosen mirror and stage file.
+```
 cd /mnt/gentoo
 curl -O https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20260614T170130Z.tar.xz
 tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner -C /mnt/gentoo
-
-#let's set some make stuff in /etc/portage/make.conf
+```
 cat <<'EOF' >  /etc/portage/make.conf
 # Please consult /usr/share/portage/config/make.conf.example for a more
 # detailed example.
