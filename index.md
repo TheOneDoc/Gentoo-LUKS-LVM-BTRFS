@@ -508,6 +508,7 @@ Generate locales
 ```
 locale-gen
 ```
+![](0019.png)
 
 Set the system default locale
 ```
@@ -519,6 +520,8 @@ Reload session with the new local
 ```
 env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
 ```
+![](0020.png)
+
 ##### Configure keymaps
 
 ```
