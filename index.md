@@ -36,11 +36,41 @@ Please adjust the following URL accordingly as the one in this guide is current 
 ```
 https://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-livegui-amd64/livegui-amd64-20260510T170106Z.iso
 ```
+Now it's time to boot our machine/VM from the installation envirnoment
+After the system is booted we start with the actual Installation
 
-#Drive to install to /dev/vd?, /dev/sd?, #/dev/nvme?n?, /dev/mmcblk?
-#/dev/vda
-#/dev/vda1, vfat,  EFI System, boot 2.5GB
-#/dev/vda2, LUKS,  LVM2,LV=Root,LV=Swap
+## Installation
+
+### Where to install to
+
+our target device is called __/dev/vda__ because it's a [virtio](https://wiki.osdev.org/Virtio) [block device](https://en.wikipedia.org/wiki/Device_file#Block_devices) other valid targets are
+
+/dev/vd?
+
+/dev/sd?
+
+/dev/nvme?n?
+
+/dev/mmcblk?
+
+Note: replace ? with the number/letter that specifies your target drive
+
+Target drive partitioning scheme:
+```
+/dev/vda
+/dev/vda1, vfat,  EFI System, boot 2.5GB
+/dev/vda2, LUKS,  LVM2,LV=Root,LV=Swap
+```
+
+### What to install
+
+Bootsrapping Gentoo is a bit different than other Linux Distributions in so far as it uses a multitude of [Stage Files](https://wiki.gentoo.org/wiki/Stage_file) instead of a single small
+base system tarball.
+
+We make use of the current stage-3 desktop openrc stage file.
+Please adjust this according to your needs
+
+In the context of Gentoo linux __"current"__ refferencs the rolling release and __"stable"__ the milestone release. In this guide we will follow __current__
 
 #This us for the rolling release stage-3 desktop openrc
 #In Gentoo "current" is rolling releaseand "stable" is milestone release
