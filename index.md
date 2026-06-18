@@ -589,20 +589,29 @@ rc-update add chronyd default
 ```
 
 ##### Enable sshd
+
+```
 rc-update add sshd default
+```
 
 ##### Install File indexing
+
 ```
 emerge --ask sys-apps/mlocate
 ```
+
 ##### Install bash completion
+
 ```
 emerge --ask app-shells/bash-completion
 ```
+
 ##### Install gentoolkit
+
 ```
 emerge --ask app-portage/gentoolkit
 ```
+
 ##### Install File Sytem tools
 
 ```
@@ -644,18 +653,19 @@ cat /etc/fstab
 ```
 ![](0021.png)
 
-##### Build /etc/crypttab
-We need the __UUID__ for the LUKS Container ```/dev/vda2```
+##### Build ```/etc/crypttab```
+Get the __UUID__ for the LUKS Container on ```/dev/vda2```
 
 ```
+lsblk -o NAME,FSTYPE,UUID,TYPE,MOUNTPOINT,LABEL
 ```
+![](0022.png)
 
+Write ```/etc/crypttab```
 
 ```
-echo "crypt /dev/vda2 none luks,discard" > /etc/crypttab
-#better use the UUID=
-echo "crypt UUID=1d643b2b-6093-4029-9add-abf842013588   none    luks,discard" > /etc/crypttab
-
+echo "crypt UUID=1e5b53d9-03d8-4545-803e-3cc69eeac52d none luks,discard" > /etc/crypttab
+```
 
 emerge --ask sys-kernel/linux-firmware
 emerge --ask sys-firmware/sof-firmware
