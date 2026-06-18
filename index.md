@@ -98,15 +98,12 @@ sudo -i
 ### prepare Installation target
 
 our target device is called __/dev/vda__ because it's a [virtio](https://wiki.osdev.org/Virtio) [block device](https://en.wikipedia.org/wiki/Device_file#Block_devices) other valid targets are
-
+```
 /dev/vd?
-
 /dev/sd?
-
 /dev/nvme?n?
-
 /dev/mmcblk?
-
+```
 Note: replace ? with the number/letter that specifies your target drive
 
 #### sanitze the target device
