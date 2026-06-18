@@ -17,19 +17,26 @@ In this example our target system is a [QEMU](https://en.wikipedia.org/wiki/QEMU
 - System Language EN/DE
 
 You have to adjust accordingly for your own needs.
-Please use the official Gentoo Documentation https://wiki.gentoo.org/wiki/Handbook:AMD64/en
+Please utilize the official [Gentoo Documentation](https://wiki.gentoo.org/wiki/Handbook:AMD64/en)
 
 
+## Preparation
+
+We use an Official Gentoo Linux [mirror](https://en.wikipedia.org/wiki/Mirror_site) throughout this installation.
+Please find one near you via [Gentoo Source Mirrors](https://www.gentoo.org/downloads/mirrors/)
 
 ```
-#Gentoo Mirror
 #Name               Protocol    IPv4/v6	    URL
-#Ionos SE (1&1 )    http        IPv4 + IPv6 http://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/
-#                   https       IPv4 + IPv6 https://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/
-#                   rsync       IPv4 + IPv6 rsync://eu.mirror.ionos.com/gentoo/
+#Ionos SE (1&1)     http        IPv4 + IPv6 http://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/
+#Ionos SE (1&1)     https       IPv4 + IPv6 https://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/
+#Ionos SE (1&1)     rsync       IPv4 + IPv6 rsync://eu.mirror.ionos.com/gentoo/
+```
 
-We use the current Gentoo Live Image as our installation envirnoment
+the current Gentoo [LiveGUI USB Image](https://www-cdn.gentoo.org/downloads/amd64/) is our installation envirnoment
+Please adjust the following URL accordingly as the one in this guide is current as of writing.
+```
 https://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-livegui-amd64/livegui-amd64-20260510T170106Z.iso
+```
 
 #Drive to install to /dev/vd?, /dev/sd?, #/dev/nvme?n?, /dev/mmcblk?
 #/dev/vda
