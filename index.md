@@ -174,9 +174,8 @@ cryptsetup refresh --persistent --allow-discards crypt
 
 #### LVM configuration
 
-Create a Volume Group (__VG__) named __system__ on our mapped __LUKS__ Container
-
-Note: the LUKS container serves as Physical Volume (__PV__) for __LVM__.
+Create a Physical Volume (__PV__) mapped to  our __LUKS__ Container and a Volume Group (__VG__) named __system__ 
+Note: the Physical Volume (__PV__) creation on LUKS container is implicit.
 ```
 vgcreate system /dev/mapper/crypt
 ```
@@ -193,6 +192,7 @@ The Second __LV__ contains our __BTRFS__ File System. We name it __root__.
 lvcreate --name root -l 100%free system
 ```
 The __LVs__ are mapped into the system as ```/dev/{VG}/{LV}``` and ```/dev/mapper/{VG}-{LV}```
+![](0007.png)
 
 #### Filesystem Creation
 
