@@ -263,7 +263,7 @@ tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner -C /mnt/gentoo
 cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
 ```
 
-### Put a sanem make.conf in place
+### Put a sane __make.conf__ in place
 This __/etc/portage/make.conf__ file is set up for
 a 8 Cores 16 Threads x86-64-3 system with 32 GB of RAM
 Note: Don't forget to set __Gentoo_Mirrors=__ to your local mirror
