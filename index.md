@@ -132,6 +132,7 @@ For more on secure wipe consult the [Gentoo Handbook](https://wiki.gentoo.org/wi
 ```
 parted /dev/vda print
 ```
+![](0004.png)
 
 ##### Create the Partion Table and Partitions
 ```
