@@ -57,7 +57,7 @@ our target device is called __/dev/vda__ because it's a [virtio](https://wiki.os
 
 Note: replace ? with the number/letter that specifies your target drive
 
-Target drive partitioning scheme:
+### Target drive partitioning scheme
 ```
 /dev/vda
 /dev/vda1, vfat,  EFI System, boot 2.5GB
@@ -70,9 +70,10 @@ Bootsrapping Gentoo is a bit different than other Linux Distributions in so far 
 base system tarball.
 
 We make use of the current stage-3 desktop openrc stage file.
-Please adjust this according to your needs
 
-In the context of Gentoo linux __"current"__ refferencs the rolling release and __"stable"__ the milestone release. In this guide we will follow __current__
+Please adjust this according to your needs.
+
+Note: In the context of Gentoo linux __"current"__ refferencs the rolling release and __"stable"__ the milestone release. In this guide we will follow __current__.
 
 #This us for the rolling release stage-3 desktop openrc
 #In Gentoo "current" is rolling releaseand "stable" is milestone release
