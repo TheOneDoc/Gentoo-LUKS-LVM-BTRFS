@@ -315,7 +315,7 @@ export PS1="(chroot) ${PS1}"
 ```
 ![](0015.png)
 
-### Check mounts
+#### Check mounts
 
 ```
 lsblk -o NAME,FSTYPE,UUID,PARTUUID,RO,RM,SIZE,STATE,OWNER,GROUP,MODE,TYPE,MOUNTPOINT,LABEL,MODEL
@@ -324,17 +324,21 @@ findmnt -R /
 Note: UUIDs device names and size can differ.
 ![](0016.png)
 
+
+#### Sync up Gentoo Linux
 ```
-#bring everything up to date
-#Get it up to date
 emerge-webrsync
+```
+![](0017.png)
 
-#Optional: change the gentoo mirror
-#emerge --ask --verbose --oneshot app-portage/mirrorselect
-#mirrorselect -i -o >> /etc/portage/make.conf
+Important: ```emerge-webrsync``` overwrites ```/etc/portage/make.conf``` as of the time this document was written.
+Make sure to rerun Put a sane __make.conf__ in place
 
+
+```
 mkdir /etc/portage/repos.conf
 cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf
+```
 
 #edit sync-uri = in /etc/portage/repos.conf/gentoo.conf
 sync-uri = rsync://eu.mirror.ionos.com/gentoo-portage
