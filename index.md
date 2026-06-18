@@ -9,7 +9,7 @@ inside a encrypted [Linux Unified Key Setup](https://en.wikipedia.org/wiki/Linux
 
 ## Target System
 
-In this example our target system is a QENU/KVM Virtual Machine running 
+In this example our target system is a [QEMU](https://en.wikipedia.org/wiki/QEMU)/[KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine) [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine) running 
 CPU x86-64-v3, 8 Cores 16 Threads 
 16 GB RAM
 200GB Drive
