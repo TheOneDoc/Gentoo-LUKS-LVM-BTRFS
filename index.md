@@ -773,7 +773,7 @@ rc-service display-manager start
 ##### Enable __seatd__
 ```
 echo "sys-auth/seatd server" > /etc/portage/package.use/seatd
-emerge --oneshot sys-auth/seatd
+emerge sys-auth/seatd
 rc-update add seatd default
 rc-service seatd start
 usermod -aG seat sddm
