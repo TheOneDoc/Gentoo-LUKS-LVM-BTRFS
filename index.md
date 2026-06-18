@@ -726,11 +726,12 @@ emerge sys-kernel/installkernel[grub]
 ```
 
 ##### Install some tools
+```
 emerge dev-vcs/git
 emerge sys-process/btop
 emerge app-misc/fastfetch
 emerge app-misc/tmux
-
+```
 ##### Install KDE
 ```
 emerge --ask kde-plasma/plasma-meta kde-apps/kde-apps-meta
