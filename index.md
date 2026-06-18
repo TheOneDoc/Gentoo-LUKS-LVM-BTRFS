@@ -159,22 +159,55 @@ parted /dev/vda print
 /dev/vda2, LUKS,  LVM2,LV=Root,LV=Swap
 ```
 
+#### EFI File system creation
+This setup will put the EFI partion on the /boot mount point
+```
+mkfs.fat -F 32 -n EFI /dev/vda1
 ```
 
-#let's take care of the filesystems
-# EFI is combined /boot and EFI so mount point is /boot
-mkfs.fat -F 32 -n EFI /dev/vda1
+#### LUKS Partition creation
+
+Format the Partion for the use as LUKS Container
+```
 cryptsetup luksFormat /dev/vda2
+```
+unlock the LUKS Container and map it to __/dev/mapper/crypt__
+```
 cryptsetup luksOpen /dev/vda2 crypt
-#Skip if we install on a HDD
+```
+(optional) enable discards on LUKS
+SSD/SD/mmc block devices should enable discards
+```
 cryptsetup refresh --persistent --allow-discards crypt
-#
+```
+
+#### LVM configuration
+
+Create a Volume Group (VG) named __system__ on our mapped LUKS Container
+Note: the LUKS container serves as Physical Volume (PV) for LVM.
+```
 vgcreate system /dev/mapper/crypt
-#I like swap to be 2.5 * RAM Size
+```
+We create two Logical Volums (LV) in our __system__ VG 
+
+The first VG contains our swap. We name it __swap__ A good size for it is RAM Size * 2.5
+```
 lvcreate --name swap -L 40G system
+```
+The Second VG contains or BTRFS File System. We name it __root__. 
+```
 lvcreate --name root -l 100%free system
-mkfs.btrfs -f -L rootfs /dev/mapper/system-root
+```
+The LVs are mapped into the system as ```/dev/{VG}/{LV}``` and ```/dev/mapper/{VG}-{LV}```
+
+#### Filesystem Creation
+
+Create a swap on /dev/system/swap
+```
 mkswap /dev/system/swap -L swapfs
+```
+
+mkfs.btrfs -f -L rootfs /dev/mapper/system-root
 mount -v -t btrfs -o ssd,compress=zstd:11,subvol=/ /dev/system/root /mnt/gentoo
 btrfs subvolume create /mnt/gentoo/@
 btrfs subvolume create /mnt/gentoo/@home
