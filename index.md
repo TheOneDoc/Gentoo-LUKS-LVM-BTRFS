@@ -1,6 +1,6 @@
-#Gentoo Linux
+# Gentoo Linux
 
-##Goal
+## Goal
 
 This document will walk you through installing [Gentoo Linux](https://en.wikipedia.org/wiki/Gentoo_Linux)
 on top of a [Snapper](http://snapper.io/) ready (__BTRFS__)[https://en.wikipedia.org/wiki/Btrfs] file system
