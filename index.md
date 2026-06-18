@@ -149,6 +149,17 @@ parted /dev/vda name 2 LUKS-crypt
 ```
 parted /dev/vda print
 ```
+![```Model: Virtio Block Device (virtblk)
+Disk /dev/vda: 215GB
+Sector size (logical/physical): 512B/512B
+Partition Table: gpt
+Disk Flags: 
+
+Number  Start   End     Size    File system  Name        Flags
+ 1      1049kB  2000MB  1999MB  fat32        esp         boot, esp
+ 2      2000MB  215GB   213GB                LUKS-crypt
+```](0004.png)
+
 
 ##### Target device partitioning scheme
 
