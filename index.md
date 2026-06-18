@@ -104,28 +104,26 @@ our target device is called __/dev/vda__ because it's a [virtio](https://wiki.os
 /dev/nvme?n?
 /dev/mmcblk?
 ```
-Note: replace ? with the number/letter that specifies your target drive
+Note: replace ? with the number/letter that specifies your target device
 
 #### sanitze the target device
 
-##### (optional) secure erase the target drive
+##### Wipe the device
+This will remove any pre-existing Partition Tables from the target device
+```
+wipefs -a /dev/vda
+```
 
+##### (optional) secure erase the target drive
 For NVME SSDs perform
 ```
 nvme sanitize /dev/nvme0 -a 0x02
 ```
-
 For all other block devices perform
 
 Note: This operation can take a long time depending on size and speed of the target drive.
 ```
 blkdiscard -vfz /dev/vda
-```
-
-##### Wipe the device
-
-```
-wipefs -a /dev/vda
 ```
 
 #### Partitioning the target device
