@@ -109,12 +109,13 @@ Note: replace ? with the number/letter that specifies your target device
 #### sanitze the target device
 
 ##### Wipe the device
-This will remove any pre-existing Partition Tables from the target device
+Remove all Filesystem, RAID and Partition Table signatures from target device
 ```
 wipefs -a /dev/vda
 ```
 
 ##### (optional) secure erase the target drive
+
 For NVME SSDs perform
 ```
 nvme sanitize /dev/nvme0 -a 0x02
@@ -125,6 +126,7 @@ Note: This operation can take a long time depending on size and speed of the tar
 ```
 blkdiscard -vfz /dev/vda
 ```
+For more on secure wipe consult the [Gentoo Handbook](https://wiki.gentoo.org/wiki/Secure_wipe)
 
 #### Partitioning the target device
 
