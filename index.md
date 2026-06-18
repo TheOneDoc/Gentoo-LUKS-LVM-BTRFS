@@ -429,7 +429,7 @@ echo 'ACCEPT_LICENSE="-* @FREE @BINARY-REDISTRIBUTABLE"' >> /etc/portage/make.co
 ##### Set use flags
 
 ```
-echo 'USE="${USE} elogind -systemd wayland kde"' >> /etc/portage/make.conf
+echo 'USE="${USE} elogind -systemd wayland kde plasma sddm pipewire pulseaudio udev elogind dbus policykit bluetooth networkmanager opengl vulkan qt6"' >> /etc/portage/make.conf
 ```
 
 ##### Updating the __@world__ set
