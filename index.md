@@ -120,12 +120,10 @@ For NVME SSDs perform
 ```
 nvme sanitize /dev/nvme0 -a 0x02
 ```
-For all other block devices perform
+For all other block devices perform ```blkdiscard -vfz /dev/vda```.
 
 Note: This operation can take a long time depending on size and speed of the target drive.
-```
-blkdiscard -vfz /dev/vda
-```
+
 For more on secure wipe consult the [Gentoo Handbook](https://wiki.gentoo.org/wiki/Secure_wipe)
 
 #### Partitioning the target device
