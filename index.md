@@ -222,7 +222,7 @@ btrfs subvolume create /mnt/gentoo/@var@log
 btrfs subvolume create /mnt/gentoo/@snapshots
 btrfs subvolume create /mnt/gentoo/@home/.snapshots
 ```
-![](0011.png)
+![](0010.png)
 
 check if all is done correctly
 ```
