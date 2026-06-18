@@ -252,7 +252,7 @@ mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@home /dev/system/root
 mount -m -t vfat /dev/vda1 /mnt/gentoo/boot
 ```
 
-###Bootstrap Gentoo Linux
+### Bootstrap Gentoo Linux
 
 Consult the [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage) for vaildation steps and in depth explanations.
 
@@ -261,6 +261,19 @@ Reminder: Make sure you use the correct URL for your chosen mirror and stage fil
 cd /mnt/gentoo
 curl -O https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20260614T170130Z.tar.xz
 tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner -C /mnt/gentoo
+```
+
+### Copy DNS setting from the Install Environment to the chroot
+
+```
+cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
+```
+
+### Put a sanem make.conf in place
+This __/etc/portage/make.conf__ file is set up for
+a 8 Cores 16 Threads x86-64-3 system with 32 GB of RAM
+Note: Don't forget to set __Gentoo_Mirrors=__ to your local mirror
+
 ```
 cat <<'EOF' >  /etc/portage/make.conf
 # Please consult /usr/share/portage/config/make.conf.example for a more
@@ -283,16 +296,24 @@ LC_MESSAGES=C.UTF-8
 GENTOO_MIRRORS="https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/"
 
 EOF
+```
 
-#let's get the DNS config into the chroot before we start it
-cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
-exit
+### chroot into the new Gentoo Installation
 
-#time to chroot into our virgin system
+```
 sudo arch-chroot /mnt/gentoo
 source /etc/profile
 export PS1="(chroot) ${PS1}"
+```
 
+### Check mounts
+
+```
+lsblk -o NAME,FSTYPE,UUID,PARTUUID,RO,RM,SIZE,STATE,OWNER,GROUP,MODE,TYPE,MOUNTPOINT,LABEL,MODEL
+```
+You should see something like this.
+Note: UUIDs device names and sizes can 
+```
 #let's check our mounts
 lsblk -o NAME,FSTYPE,UUID,PARTUUID,RO,RM,SIZE,STATE,OWNER,GROUP,MODE,TYPE,MOUNTPOINT,LABEL,MODEL
 NAME              FSTYPE      UUID                                   PARTUUID                             RO RM   SIZE STATE   OWNER GROUP MODE       TYPE  MOUNTPOINT LABEL                MODEL
@@ -303,7 +324,10 @@ vda                                                                             
     |-system-swap swap        292abd12-ee02-4b33-abe0-674f59711190                                         0  0    40G running root  disk  brw-rw---- lvm              swapfs
     `-system-root btrfs       4881a6ba-fb34-4102-9bde-3a6f0ab34eae                                         0  0 158.1G running root  disk  brw-rw---- lvm   /home      rootfs
 
+```
 
+
+```
 #bring everything up to date
 #Get it up to date
 emerge-webrsync
