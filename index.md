@@ -315,6 +315,8 @@ export PS1="(chroot) ${PS1}"
 ```
 ![](0015.png)
 
+Consult the [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Base) about Installing the Gentoo base system
+
 #### Check mounts
 
 ```
@@ -386,9 +388,6 @@ getuto
 ```
 emerge --sync
 ```
-eselect news list
-eselect news read
-eselect news purge
 
 ##### Set the System Profile
 
@@ -404,51 +403,125 @@ eselect profile set 7
 #we don't do that to not mess with binhost packages
 #emerge --ask --oneshot app-portage/cpuid2cpuflags
 #echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
+```
 
-#Make sure that the system uses the right GPU (virgl, d3d12, amdgpu radeonsi, intel, nouveau, nvidia)
+##### Set the GPU
+
+The most commonly used GPUs are
+- virgl, QEMU/KVM virtio GPU 
+- d3d12, WSL2 virtual Windows GPU
+- amdgpu radeonsi, AMD GPUs
+- intel, iGPUs/dGPUs
+- nouveau, NVidia GPUs (free) 
+- nvidia, NVidia GPUs (proprietary)
+
+```
 echo "*/* VIDEO_CARDS: -* virgl" > /etc/portage/package.use/00video_cards
+```
 
+##### Set the acceptable licences
+```
 echo 'ACCEPT_LICENSE="-* @FREE @BINARY-REDISTRIBUTABLE"' >> /etc/portage/make.conf
+```
 
-#Updating the @world set
-#use binary packages
+##### Set use flags
+
+```
+echo 'USE="${USE} elogind -systemd wayland kde"' >> /etc/portage/make.conf
+```
+
+##### Updating the __@world__ set
+```
 emerge --ask --verbose --update --deep --newuse --getbinpkg @world
+```
 
-#or build from source
-#emerge --ask --verbose --update --deep --changed-use --getbinpkg=n @world
+##### emerge news
+Portage may output informational messages similar to the following:
 
+```
+* IMPORTANT: 22 news items need reading for repository 'gentoo'.
+* Use eselect news to read news items.
+```
+
+News items were created to provide a communication medium to push critical messages to users via the Gentoo ebuild repository. 
+To manage them, use ```eselect news```.
+The eselect application is a Gentoo-specific utility that allows for a common management interface for system administration.
+In this case, eselect is asked to use its news module.
+
+For the news module, three operations are most used:
+
+- With ```eselect news list``` an overview of the available news items is displayed.
+- With ```eselect news read``` the news items can be read.
+- With ```eselect news purge``` news items can be removed once they have been read and will not be reread anymore.
+
+##### Clean Up 
+```
 emerge --ask --pretend --depclean
 emerge --ask --depclean
+```
+##### User Configuratiom
 
-#Set root password
+Set root user account password
+```
 passwd root
-#Create main user
+```
+Create main user account and set password
+```
 useradd -m -G wheel,kvm,users,audio -s /bin/bash uwe
 passwd uwe
+```
 
-#install and configure doas
+###### Install and configure Doas
+
+```
 emerge --ask app-admin/doas
 echo "permit persist :wheel" > /etc/doas.conf
 chown -c root:root /etc/doas.conf
 chmod -c 0400 /etc/doas.conf
+```
 
-#Set hostname
-echo gentoodiablo > /etc/hostname
+##### Set the hostname
+echo myhostname > /etc/hostname
 
-#Let's set the Timezone
+##### Set the Timezone
+The Timezone is set to CET
+
+Adjust accordingly.
+```
 ln -sf ../usr/share/zoneinfo/Europe/Berlin /etc/localtime
+```
 
-#Configure locales
+##### Configure locales
+The locales are set to en_US (English, USA) and de_DE (German, Germany)
+
+Adjust accordingly.
+
+Configure /etc/local.gen
+```
 cat << 'EOF' > /etc/locale.gen
 en_US.UTF-8 UTF-8
 de_DE.UTF-8 UTF-8
 EOF
+```
 
+Generate locales
+```
 locale-gen
+```
+
+Set the system default locale
+```
 eselect locale list
 eselect locale set 4
-env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
+```
 
+Reload session with the new local
+```
+env-update && source /etc/profile && export PS1="(chroot) ${PS1}"
+```
+##### Configure keymaps
+
+```
 cat << 'EOF' > /etc/conf.d/keymaps
 # Use keymap to specify the default console keymap.  There is a complete tree
 # of keymaps in /usr/share/keymaps to choose from.
@@ -474,64 +547,99 @@ dumpkeys_charset=""
 # To fix this, set to "yes"
 fix_euro="NO"
 EOF
+```
 
-#Generate Machine ID
+##### Generate Machine ID
+```
 dbus-uuidgen --ensure=/etc/machine-id
+```
 
-#install NetworkManager
 
+##### Install NetworkManager
+
+```
 echo 'USE="${USE} networkmanager"' >> /etc/portage/make.conf
-
 emerge --ask net-misc/networkmanager
 rc-update add NetworkManager default
+```
 
-#syslog
+##### Install syslog-ng
+
+```
 emerge --ask app-admin/syslog-ng
 emerge --ask app-admin/logrotate
 rc-update add syslog-ng default
+```
 
-#Cron
+##### Install Cron
+
+```
 emerge --ask sys-process/cronie
 rc-update add cronie default
+```
 
-#NTP
+##### Install NTP
+
+```
 emerge --ask net-misc/chrony
 rc-update add chronyd default
+```
 
-#File indexing
-emerge --ask sys-apps/mlocate
-
-#enable sshd
+##### Enable sshd
 rc-update add sshd default
 
-#bash
+##### Install File indexing
+```
+emerge --ask sys-apps/mlocate
+```
+##### Install bash completion
 emerge --ask app-shells/bash-completion
 
+##### Install File Sytem tools
+
+```
 emerge --ask sys-fs/cryptsetup
 emerge --ask sys-fs/btrfs-progs
 emerge --ask sys-fs/dosfstools
 emerge --ask sys-fs/xfsprogs
 emerge --ask sys-fs/e2fsprogs
 emerge --ask sys-fs/ntfs3g
-emerge --ask --getbinpkg=n sys-fs/zfs
+emerge --ask sys-fs/zfs
 emerge --ask sys-fs/f2fs-tools
 emerge --ask sys-fs/mdadm
 emerge --ask dev-python/zstandard
 emerge --ask sys-block/io-scheduler-udev-rules
 emerge --ask app-portage/gentoolkit
+```
 
+##### Install the Logical Vulume Manager
+
+set the USAGE flag
+```
 cat << 'EOF' >> /etc/portage/package.use/lvm2
 #Enable support for the LVM daemon and related tools
 sys-fs/lvm2 lvm
 EOF
+```
 
+```
 emerge --ask sys-fs/lvm2
 rc-update add lvm boot
-
-#Let's build a fstab
+```
+##### Build /etc/fstab
+```
 emerge --ask sys-fs/genfstab
 genfstab -U / >> /etc/fstab
+```
 
+##### Build /etc/crypttab
+We need the __UUID__ for the LUKS Container ```/dev/vda2```
+
+```
+```
+
+
+```
 echo "crypt /dev/vda2 none luks,discard" > /etc/crypttab
 #better use the UUID=
 echo "crypt UUID=1d643b2b-6093-4029-9add-abf842013588   none    luks,discard" > /etc/crypttab
