@@ -160,14 +160,11 @@ parted /dev/vda print
 ```
 
 #### EFI File system creation
-This setup will put the EFI partion on the /boot mount point
 ```
 mkfs.fat -F 32 -n EFI /dev/vda1
 ```
 
 #### LUKS Partition creation
-
-Format the Partion for the use as LUKS Container
 ```
 cryptsetup luksFormat /dev/vda2
 ```
@@ -176,6 +173,7 @@ unlock the LUKS Container and map it to __/dev/mapper/crypt__
 cryptsetup luksOpen /dev/vda2 crypt
 ```
 (optional) enable discards on LUKS
+
 SSD/SD/mmc block devices should enable discards
 ```
 cryptsetup refresh --persistent --allow-discards crypt
@@ -184,21 +182,26 @@ cryptsetup refresh --persistent --allow-discards crypt
 #### LVM configuration
 
 Create a Volume Group (VG) named __system__ on our mapped LUKS Container
-Note: the LUKS container serves as Physical Volume (PV) for LVM.
+
+Note: the LUKS container serves as Physical Volume (_PV_) for _LVM_.
 ```
 vgcreate system /dev/mapper/crypt
 ```
 We create two Logical Volums (LV) in our __system__ VG 
 
-The first VG contains our swap. We name it __swap__ A good size for it is RAM Size * 2.5
+The first __LV__ contains our swap. We name it __swap__.
+
+A good size for it is RAM Size * 2.5
 ```
 lvcreate --name swap -L 40G system
 ```
-The Second VG contains or BTRFS File System. We name it __root__. 
+The Second __LV__ contains or BTRFS File System. 
+
+We name it __root__. 
 ```
 lvcreate --name root -l 100%free system
 ```
-The LVs are mapped into the system as ```/dev/{VG}/{LV}``` and ```/dev/mapper/{VG}-{LV}```
+The _LVs_ are mapped into the system as ```/dev/{VG}/{LV}``` and ```/dev/mapper/{VG}-{LV}```
 
 #### Filesystem Creation
 
