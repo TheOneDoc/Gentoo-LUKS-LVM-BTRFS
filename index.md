@@ -43,7 +43,7 @@ After the system is booted we start with the actual Installation.
 
 ## Installation
 
-### Where to install to
+### Where to install?
 
 our target device is called __/dev/vda__ because it's a [virtio](https://wiki.osdev.org/Virtio) [block device](https://en.wikipedia.org/wiki/Device_file#Block_devices) other valid targets are
 
@@ -64,31 +64,48 @@ Note: replace ? with the number/letter that specifies your target drive
 /dev/vda2, LUKS,  LVM2,LV=Root,LV=Swap
 ```
 
-### What to install
+### What to install?
 
 Bootsrapping Gentoo is a bit different than other Linux Distributions in so far as it uses a multitude of [Stage Files](https://wiki.gentoo.org/wiki/Stage_file) instead of a single small
 base system tarball.
 
 We make use of the current stage-3 desktop openrc stage file.
 
-Please adjust this according to your needs.
+Please adjust this URL according to your needs and the latest stage file.
 
 Note: In the context of Gentoo linux __"current"__ refferencs the rolling release and __"stable"__ the milestone release. In this guide we will follow __current__.
 
-#This us for the rolling release stage-3 desktop openrc
-#In Gentoo "current" is rolling releaseand "stable" is milestone release
-#https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20260614T170130Z.tar.xz
+```
+https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20260614T170130Z.tar.xz
+```
 
-#Open Konsole
+###Prepare the Installation Envirnoment
+
+Note:as long as we are in our Installation Envirnoment we will use the [__sudo__](https://en.wikipedia.org/wiki/Sudo) command to execute tasks with root privileges.
+
+However within the chroot and our newly installed system we will use [__doas__](https://en.wikipedia.org/wiki/Doas).
+
+__sudo -i__ ≈ __doas -s__
+
+Open the __Console__ by starting [__Konsole__](https://en.wikipedia.org/wiki/Konsole)
+
+#### Set root password and create our install user
+```
 sudo -i
 passwd
 useradd -m -G users,wheel uwe
 psswd uwe
 su - uwe
-#let's start sshd
+```
+#### let's start sshd
+This step can be skipped if the installation is done locally
+```
 sudo rc-service sshd start
-#get our current ip to ssh into the installation
+```
+####Get the IP Address of our Install Environment
+```
 ip a
+```
 
 #now either continue in the console or ssh into the machine
 sudo -i
