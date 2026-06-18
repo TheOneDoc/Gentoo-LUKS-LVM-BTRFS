@@ -88,6 +88,8 @@ sudo rc-service sshd start
 ```
 ip a
 ```
+![](0002.png)
+
 At this point you can either continue the installation locally or ssh into the Installation Environment and continue from remote 
 
 All the following steps need to be performed with superuser (root) privileges
