@@ -313,27 +313,16 @@ sudo arch-chroot /mnt/gentoo
 source /etc/profile
 export PS1="(chroot) ${PS1}"
 ```
+![](0015.png)
 
 ### Check mounts
 
 ```
 lsblk -o NAME,FSTYPE,UUID,PARTUUID,RO,RM,SIZE,STATE,OWNER,GROUP,MODE,TYPE,MOUNTPOINT,LABEL,MODEL
+findmnt -R /
 ```
-You should see something like this.
-Note: UUIDs device names and sizes can 
-```
-#let's check our mounts
-lsblk -o NAME,FSTYPE,UUID,PARTUUID,RO,RM,SIZE,STATE,OWNER,GROUP,MODE,TYPE,MOUNTPOINT,LABEL,MODEL
-NAME              FSTYPE      UUID                                   PARTUUID                             RO RM   SIZE STATE   OWNER GROUP MODE       TYPE  MOUNTPOINT LABEL                MODEL
-vda                                                                                                        0  0   200G         root  disk  brw-rw---- disk
-|-vda1            vfat        958B-3DE5                              1aa197e0-0a87-4009-ad58-f33b256fd4f6  0  0   1.9G         root  disk  brw-rw---- part  /boot      EFI
-`-vda2            crypto_LUKS 1d643b2b-6093-4029-9add-abf842013588   fd4d1ed0-fb8b-4c60-aef2-782f12cda54c  0  0 198.1G         root  disk  brw-rw---- part
-  `-crypt         LVM2_member XUAO8R-EIye-BbyP-ohiz-Hpv0-wl50-rSJdc5                                       0  0 198.1G running root  disk  brw-rw---- crypt
-    |-system-swap swap        292abd12-ee02-4b33-abe0-674f59711190                                         0  0    40G running root  disk  brw-rw---- lvm              swapfs
-    `-system-root btrfs       4881a6ba-fb34-4102-9bde-3a6f0ab34eae                                         0  0 158.1G running root  disk  brw-rw---- lvm   /home      rootfs
-
-```
-
+Note: UUIDs device names and size can differ.
+![](0016.png)
 
 ```
 #bring everything up to date
