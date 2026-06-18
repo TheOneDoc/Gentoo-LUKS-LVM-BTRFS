@@ -78,6 +78,7 @@ useradd -m -G users,wheel uwe
 psswd uwe
 su - uwe
 ```
+![](0001.png)
 #### (optional) start sshd
 This step can be skipped if the installation is done locally
 ```
