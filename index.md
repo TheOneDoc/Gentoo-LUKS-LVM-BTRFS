@@ -222,11 +222,13 @@ btrfs subvolume create /mnt/gentoo/@var@log
 btrfs subvolume create /mnt/gentoo/@snapshots
 btrfs subvolume create /mnt/gentoo/@home/.snapshots
 ```
+![](0011.png)
+
 check if all is done correctly
 ```
 btrfs subvolume list /mnt/gentoo
 ```
-![](0010.png)
+![](0011.png)
 
 Set __@__ as the __default__ subvolume
 ```
