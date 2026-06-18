@@ -181,7 +181,7 @@ Note: the LUKS container serves as Physical Volume (__PV__) for __LVM__.
 ```
 vgcreate system /dev/mapper/crypt
 ```
-We create two Logical Volums (__LV__) in our Volume Group (__system__ __VG__). 
+We create two Logical Volums (__LV__) in our Volume Group (__VG__) __system__. 
 
 The first __LV__ contains our swap. We name it __swap__.
 
