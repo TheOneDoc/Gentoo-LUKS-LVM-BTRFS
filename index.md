@@ -666,99 +666,134 @@ Write ```/etc/crypttab```
 ```
 echo "crypt UUID=1e5b53d9-03d8-4545-803e-3cc69eeac52d none luks,discard" > /etc/crypttab
 ```
-
+##### Install Linux Firmware
+```
 emerge --ask sys-kernel/linux-firmware
 emerge --ask sys-firmware/sof-firmware
+```
+##### Install the Linux Kernel
+Make sure that __ugrd__ and __grub__ are used by the kernel
 
+```
 cat << 'EOF' >> /etc/portage/package.use/installkernel
 sys-kernel/installkernel -dracut ugrd grub
 EOF
-
+```
+Make sure that Grub uses the EFI
+```
 echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
+```
+make sure that external kmods get auto rebuild
+```
+echo 'USE="${USE} dist-kernel"' >> /etc/portage/make.conf
+```
 
+Misc config (not needed?)
+
+```
 mkdir -p /etc/kernel
 echo "quiet splash" > /etc/kernel/cmdline
 mkdir -p /etc/cmdline.d
 ln -s /etc/kernel/cmdline /etc/cmdline.d/00-installkernel.conf
+```
 
-#make sure that external kmods get auto rebuild
-echo 'USE="${USE} dist-kernel"' >> /etc/portage/make.conf
-
-#we want to build our own kernel
-emerge --ask sys-kernel/gentoo-kernel
-
-#Just use the gentoo default kernel binary
+Install the gentoo default kernel binary
+```
 emerge --ask sys-kernel/gentoo-kernel-bin
+```
 
+Installkernel can be re-emerged and will pull UGRD
 
-#Once configured, installkernel can be re-emerged and will pull UGRD
+```
 emerge -ask sys-kernel/installkernel
+```
 
-####Install ZFS support
+##### Install ZFS support
+
+```
 emerge --ask sys-fs/zfs
-
-#To force an initramfs rebuild, emerge --config can be used on dist-kernel packages:
-emerge --config sys-kernel/gentoo-kernel
-#or
+```
+To force an initramfs rebuild, emerge --config can be used on dist-kernel packages:
+```
 emerge --config sys-kernel/gentoo-kernel-bin
-
-emerge --ask --getbinpkg=n sys-boot/grub
+```
+##### Install GRUB
+```
+emerge --ask sys-boot/grub
 grub-install --efi-directory=/boot
 grub-mkconfig -o /boot/grub/grub.cfg
-emerge --ask --getbinpkg=n sys-kernel/installkernel[grub]
+emerge sys-kernel/installkernel[grub]
+```
 
-#let's add some software
-echo 'USE="${USE} elogind -systemd"' >> /etc/portage/make.conf
-echo 'USE="${USE} lzma zstd curl"' >> /etc/portage/make.conf
-emerge --ask --getbinpkg=n dev-vcs/git
-emerge --ask --getbinpkg=n sys-process/btop
-emerge --ask --getbinpkg=n app-misc/fastfetch
-emerge --ask --getbinpkg=n app-misc/tmux
+##### Install some tools
+emerge dev-vcs/git
+emerge sys-process/btop
+emerge app-misc/fastfetch
+emerge app-misc/tmux
 
-#KDE
+##### Install KDE
+```
 emerge --ask kde-plasma/plasma-meta kde-apps/kde-apps-meta
 emerge --ask gui-libs/display-manager-init
+```
 
-#world update
-emerge --ask --verbose --update --deep --changed-use --getbinpkg=n @world
+##### Update __@world__ set
+```
+emerge --ask --verbose --update --deep --changed-use @world
+```
+###### enable __elogind__
+```
 rc-update add elogind boot
-emerge --ask x11-misc/sddm
-usermod -a -G video sddm
-echo "sys-auth/seatd server" > /etc/portage/package.use/seatd
-emerge --oneshot sys-auth/seatd
-rc-update add seatd default
-rc-service seatd start
-usermod -aG seat sddm
-usermod -aG seat uwe
+```
+##### Install __SDDM__
 
+```
+emerge --ask x11-misc/sddm
+emerge --ask kde-plasma/sddm-kcm
+
+usermod -a -G video sddm
 cat << 'EOF' > /etc/conf.d/display-manager
 CHECKVT=7
 DISPLAYMANAGER="sddm"
 EOF
-
-#do some cleanup
-eclean-dist
-eclean-pkg
-rm /stage3-*.tar.*
-
-#we're done with the chroot
-exit
-rc-service elogind start
-rc-update add display-manager default
-rc-service display-manager start
-emerge --ask kde-plasma/sddm-kcm
 
 cat << 'EOF' > /etc/sddm.conf
 [Users]
 MaximumUid=60000
 MinimumUid=1000
 EOF
-#reboot time
-sudo reboot
 
-Note: because someone asked about the VM config, here you go
----
+rc-update add display-manager default
+rc-service display-manager start
 ```
+
+##### Enable __seatd__
+```
+echo "sys-auth/seatd server" > /etc/portage/package.use/seatd
+emerge --oneshot sys-auth/seatd
+rc-update add seatd default
+rc-service seatd start
+usermod -aG seat sddm
+usermod -aG seat uwe
+```
+
+
+##### Cleanup
+```
+eclean-dist
+eclean-pkg
+rm /stage3-*.tar.*
+```
+All done time to exit the chrot
+```
+exit
+````
+
+And reboot the machine
+```
+sudo reboot
+```
+
 ```
 <domain type="kvm">
   <name>Gentoo2</name>
@@ -960,7 +995,4 @@ Note: because someone asked about the VM config, here you go
     </rng>
   </devices>
 </domain>
-```
-```
----
 ```
