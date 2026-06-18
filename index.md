@@ -7,6 +7,8 @@ with [KDE Plasma](https://kde.org/plasma-desktop/) on top of a [Snapper](http://
 that resides inside a [Logical Vulume Manager](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) (__LVM__) Logical Volume (__LV__) inside a Volume Group (__VG__) 
 inside a encrypted [Linux Unified Key Setup](https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup) (__LUKS__) partition
 
+Note: The configuration and usage of Snapper is out of scope for this document.
+
 ## Target System
 
 In this example our target system is a [QEMU](https://en.wikipedia.org/wiki/QEMU)/[KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine) [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine) running 
