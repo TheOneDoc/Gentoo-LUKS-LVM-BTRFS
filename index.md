@@ -14,8 +14,8 @@ In this example our target system is a [QEMU](https://en.wikipedia.org/wiki/QEMU
 - Ram 16 GB
 - Drive 200GB
 - booted via (Unified Extensible Firmware Interface)[https://en.wikipedia.org/wiki/UEFI] (UEFI)
+- System Language EN/DE
 
-System Language EN/DE
 You have to adjust accordingly for your own needs.
 Please use the official Gentoo Documentation https://wiki.gentoo.org/wiki/Handbook:AMD64/en
 
