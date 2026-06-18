@@ -89,6 +89,12 @@ ip a
 ```
 At this point you can either continue the installation locally or ssh into the Installation Environment and continue from remote 
 
+All the following steps need to be performed with superuser (root) privileges
+
+```
+sudo -i
+```
+
 ### prepare Installation target
 
 our target device is called __/dev/vda__ because it's a [virtio](https://wiki.osdev.org/Virtio) [block device](https://en.wikipedia.org/wiki/Device_file#Block_devices) other valid targets are
@@ -102,12 +108,6 @@ our target device is called __/dev/vda__ because it's a [virtio](https://wiki.os
 /dev/mmcblk?
 
 Note: replace ? with the number/letter that specifies your target drive
-
-All the following steps need to be performed with superuser (root) privileges
-
-```
-sudo -i
-```
 
 #### sanitze the target device
 
