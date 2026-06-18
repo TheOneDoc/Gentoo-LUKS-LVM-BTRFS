@@ -10,10 +10,11 @@ inside a encrypted [Linux Unified Key Setup](https://en.wikipedia.org/wiki/Linux
 ## Target System
 
 In this example our target system is a [QEMU](https://en.wikipedia.org/wiki/QEMU)/[KVM](https://en.wikipedia.org/wiki/Kernel-based_Virtual_Machine) [Virtual Machine](https://en.wikipedia.org/wiki/Virtual_machine) running 
-CPU x86-64-v3, 8 Cores 16 Threads 
-16 GB RAM
-200GB Drive
-booted via (Unified Extensible Firmware Interface)[https://en.wikipedia.org/wiki/UEFI] (UEFI)
+- CPU x86-64-v3, 8 Cores 16 Threads 
+- Ram 16 GB
+- Drive 200GB
+- booted via (Unified Extensible Firmware Interface)[https://en.wikipedia.org/wiki/UEFI] (UEFI)
+
 System Language EN/DE
 You have to adjust accordingly for your own needs.
 Please use the official Gentoo Documentation https://wiki.gentoo.org/wiki/Handbook:AMD64/en
