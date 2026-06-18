@@ -31,7 +31,8 @@ Please find one near you via [Gentoo Source Mirrors](https://www.gentoo.org/down
 #Ionos SE (1&1)     rsync       IPv4 + IPv6 rsync://eu.mirror.ionos.com/gentoo/
 ```
 
-the current Gentoo [LiveGUI USB Image](https://www-cdn.gentoo.org/downloads/amd64/) is our installation envirnoment
+the current Gentoo [LiveGUI USB Image](https://www-cdn.gentoo.org/downloads/amd64/) is our installation envirnoment.
+
 Please adjust the following URL accordingly as the one in this guide is current as of writing.
 ```
 https://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-livegui-amd64/livegui-amd64-20260510T170106Z.iso
