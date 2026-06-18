@@ -204,12 +204,14 @@ Enable swap
 ```
 swapon /dev/system/swap
 ```
-![](0007.png)
+![](0008.png)
 
 Create BTRFS on /dev/mapper/system-root and name it __rootfs__
 ```
 mkfs.btrfs -f -L rootfs /dev/mapper/system-root
 ```
+![](0009.png)
+
 Create the BTRFS Subvolums
 ```
 mount -v -t btrfs -o ssd,compress=zstd:11,subvol=/ /dev/system/root /mnt/gentoo
@@ -224,7 +226,7 @@ check if all is done correctly
 ```
 btrfs subvolume list /mnt/gentoo
 ```
-![](0008.png)
+![](0010.png)
 
 Set __@__ as the __default__ subvolume
 ```
