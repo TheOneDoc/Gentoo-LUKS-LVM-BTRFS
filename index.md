@@ -193,7 +193,7 @@ The Second __LV__ contains our __BTRFS__ File System. We name it __root__.
 ```
 lvcreate --name root -l 100%free system
 ```
-The _LVs_ are mapped into the system as ```/dev/{VG}/{LV}``` and ```/dev/mapper/{VG}-{LV}```
+The __LVs__ are mapped into the system as ```/dev/{VG}/{LV}``` and ```/dev/mapper/{VG}-{LV}```
 
 #### Filesystem Creation
 
