@@ -796,6 +796,7 @@ And reboot the machine
 ```
 sudo reboot
 ```
+![The End Result](0023.png)
 
 ```
 <domain type="kvm">
