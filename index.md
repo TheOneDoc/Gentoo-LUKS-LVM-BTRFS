@@ -253,6 +253,11 @@ mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@snapshots /dev/system
 mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@home /dev/system/root /mnt/gentoo/home
 mount -m -t vfat /dev/vda1 /mnt/gentoo/boot
 ```
+check if everything is mounted in the right place
+```
+findmnt -R /mnt/gentoo
+```
+![](0013.png)
 
 ### Bootstrap Gentoo Linux
 
