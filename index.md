@@ -37,8 +37,9 @@ Please adjust the following URL accordingly as the one in this guide is current 
 ```
 https://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-livegui-amd64/livegui-amd64-20260510T170106Z.iso
 ```
-Now it's time to boot our machine/VM from the installation envirnoment
-After the system is booted we start with the actual Installation
+Now it's time to boot our machine/VM from the installation envirnoment.
+
+After the system is booted we start with the actual Installation.
 
 ## Installation
 
