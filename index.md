@@ -7,7 +7,7 @@ on top of a [Snapper](http://snapper.io/) ready (__BTRFS__)[https://en.wikipedia
 that resides inside a [Logical Vulume Manager](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) (__LVM__) Logical Volume (__LV__) inside a Volume Group (__VG__) 
 inside a encrypted [Linux Unified Key Setup](https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup) (__LUKS__) partition
 
-##Target System
+## Target System
 
 In this example our target system is a QENU/KVM Virtual Machine running 
 CPU x86-64-v3, 8 Cores 16 Threads 
