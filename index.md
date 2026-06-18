@@ -3,7 +3,7 @@
 ## Goal
 
 This document will walk you through installing [Gentoo Linux](https://en.wikipedia.org/wiki/Gentoo_Linux)
-on top of a [Snapper](http://snapper.io/) ready (__BTRFS__)[https://en.wikipedia.org/wiki/Btrfs] file system
+on top of a [Snapper](http://snapper.io/) ready [__BTRFS__](https://en.wikipedia.org/wiki/Btrfs) file system
 that resides inside a [Logical Vulume Manager](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) (__LVM__) Logical Volume (__LV__) inside a Volume Group (__VG__) 
 inside a encrypted [Linux Unified Key Setup](https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup) (__LUKS__) partition
 
