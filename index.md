@@ -238,6 +238,7 @@ check if it's set correctly
 ```
 btrfs subvolume get-default /mnt/gentoo
 ```
+![](0012.png)
 cleanup
 ```
 umount /mnt/gentoo
