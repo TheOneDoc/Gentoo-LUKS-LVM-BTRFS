@@ -170,7 +170,7 @@ SSD/SD/mmc block devices should enable discards
 ```
 cryptsetup refresh --persistent --allow-discards crypt
 ```
-![](0005.png)
+![](0006.png)
 
 #### LVM configuration
 
