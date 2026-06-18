@@ -334,24 +334,16 @@ emerge-webrsync
 Important: ```emerge-webrsync``` overwrites ```/etc/portage/make.conf``` as of the time this document was written.
 Make sure to rerun [Put a sane __make.conf__ in place](#put-a-sane-makeconf-in-place)
 
+#### Configure Repositories
 
+##### Configure the rsync mirror
 ```
 mkdir /etc/portage/repos.conf
-cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf
+cat /usr/share/portage/config/repos.conf | sed 's|rsync://rsync.gentoo.org/gentoo-portage|rsync://eu.mirror.ionos.com/gentoo-portage|g' > /etc/portage/repos.conf/gentoo.conf
 ```
+##### Configure the binary package host mirror
 
-#edit sync-uri = in /etc/portage/repos.conf/gentoo.conf
-sync-uri = rsync://eu.mirror.ionos.com/gentoo-portage
-emerge --sync
-eselect news list
-eselect news read
-eselect news purge
-#let's select the system profile
-eselect profile list
-eselect profile set 7
-
-#we want a binary package host that allows for x86-64-3
-
+```
 mkdir -p /etc/portage/binrepos.conf
 cat << 'EOF' > /etc/portage/binrepos.conf/gentoo.conf
 [gentoo]
@@ -374,21 +366,42 @@ verify-signature = true
 # Default value with >=portage-3.0.77
 location = /var/cache/binhost/gentoo-x86-64-v3
 EOF
+```
+##### Configure portage to use binary packages
 
-
-#tell portage that we want binary packages
-
+```
 cat <<EOF >> /etc/portage/make.conf
 # Appending getbinpkg to the list of values within the EMERGE_DEFAULT_OPTS variable
 EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --getbinpkg"
 BINPKG_FORMAT="gpkg"
 USE="${USE} bindist"
 EOF
-
-#setup keyrings
+```
+Generate the package signing keyring
+```
 getuto
+```
 
-#we don#t do that to not mess with binhost packages
+##### Sync up Gentoo Linux
+```
+emerge --sync
+```
+eselect news list
+eselect news read
+eselect news purge
+
+##### Set the System Profile
+
+Set the default/linux/amd64/23.0/desktop/plasma (stable) Profile
+
+```
+eselect profile list
+eselect profile set 7
+```
+![](0018.png)
+
+```
+#we don't do that to not mess with binhost packages
 #emerge --ask --oneshot app-portage/cpuid2cpuflags
 #echo "*/* $(cpuid2cpuflags)" > /etc/portage/package.use/00cpu-flags
 
