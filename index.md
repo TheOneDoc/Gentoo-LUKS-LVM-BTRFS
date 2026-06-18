@@ -596,8 +596,13 @@ rc-update add sshd default
 emerge --ask sys-apps/mlocate
 ```
 ##### Install bash completion
+```
 emerge --ask app-shells/bash-completion
-
+```
+##### Install gentoolkit
+```
+emerge --ask app-portage/gentoolkit
+```
 ##### Install File Sytem tools
 
 ```
@@ -607,33 +612,37 @@ emerge --ask sys-fs/dosfstools
 emerge --ask sys-fs/xfsprogs
 emerge --ask sys-fs/e2fsprogs
 emerge --ask sys-fs/ntfs3g
-emerge --ask sys-fs/zfs
 emerge --ask sys-fs/f2fs-tools
 emerge --ask sys-fs/mdadm
 emerge --ask dev-python/zstandard
 emerge --ask sys-block/io-scheduler-udev-rules
-emerge --ask app-portage/gentoolkit
 ```
 
 ##### Install the Logical Vulume Manager
 
-set the USAGE flag
+Set the USAGE flag
 ```
 cat << 'EOF' >> /etc/portage/package.use/lvm2
 #Enable support for the LVM daemon and related tools
 sys-fs/lvm2 lvm
 EOF
 ```
-
+Install and enable LVM
 ```
 emerge --ask sys-fs/lvm2
 rc-update add lvm boot
 ```
+
 ##### Build /etc/fstab
 ```
 emerge --ask sys-fs/genfstab
 genfstab -U / >> /etc/fstab
 ```
+check generated file
+```
+cat /etc/fstab
+```
+![](0021.png)
 
 ##### Build /etc/crypttab
 We need the __UUID__ for the LUKS Container ```/dev/vda2```
@@ -674,6 +683,9 @@ emerge --ask sys-kernel/gentoo-kernel-bin
 
 #Once configured, installkernel can be re-emerged and will pull UGRD
 emerge -ask sys-kernel/installkernel
+
+####Install ZFS support
+emerge --ask sys-fs/zfs
 
 #To force an initramfs rebuild, emerge --config can be used on dist-kernel packages:
 emerge --config sys-kernel/gentoo-kernel
