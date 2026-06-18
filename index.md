@@ -204,6 +204,8 @@ Enable swap
 ```
 swapon /dev/system/swap
 ```
+![](0007.png)
+
 Create BTRFS on /dev/mapper/system-root and name it __rootfs__
 ```
 mkfs.btrfs -f -L rootfs /dev/mapper/system-root
@@ -222,6 +224,8 @@ check if all is done correctly
 ```
 btrfs subvolume list /mnt/gentoo
 ```
+![](0008.png)
+
 Set __@__ as the __default__ subvolume
 ```
 btrfs subvolume set-default /mnt/gentoo/@
