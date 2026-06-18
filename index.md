@@ -97,6 +97,7 @@ All the following steps need to be performed with superuser (root) privileges
 ```
 sudo -i
 ```
+![](0003.png)
 
 ### prepare Installation target
 
