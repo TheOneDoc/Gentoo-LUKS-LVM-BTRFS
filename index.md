@@ -116,11 +116,7 @@ wipefs -a /dev/vda
 
 ##### (optional) secure erase the target drive
 
-For NVME SSDs perform
-```
-nvme sanitize /dev/nvme0 -a 0x02
-```
-For all other block devices perform ```blkdiscard -vfz /dev/vda```.
+For NVME SSDs perform ```nvme sanitize /dev/nvme0 -a 0x02``` and for all other block devices perform ```blkdiscard -vfz /dev/vda```.
 
 Note: This operation can take a long time depending on size and speed of the target drive.
 
