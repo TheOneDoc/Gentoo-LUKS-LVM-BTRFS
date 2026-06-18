@@ -332,7 +332,7 @@ emerge-webrsync
 ![](0017.png)
 
 Important: ```emerge-webrsync``` overwrites ```/etc/portage/make.conf``` as of the time this document was written.
-Make sure to rerun Put a sane __make.conf__ in place
+Make sure to rerun [Put a sane __make.conf__ in place](#put-a-sane-makeconf-in-place)
 
 
 ```
