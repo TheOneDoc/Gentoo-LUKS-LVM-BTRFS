@@ -205,12 +205,20 @@ The _LVs_ are mapped into the system as ```/dev/{VG}/{LV}``` and ```/dev/mapper/
 
 #### Filesystem Creation
 
-Create a swap on /dev/system/swap
+Create swap on /dev/system/swap
 ```
 mkswap /dev/system/swap -L swapfs
 ```
-
+Enable swap
+```
+swapon /dev/system/swap
+```
+Create BTRFS on /dev/mapper/system-root
+```
 mkfs.btrfs -f -L rootfs /dev/mapper/system-root
+```
+Create the BTRFS Subvolums
+```
 mount -v -t btrfs -o ssd,compress=zstd:11,subvol=/ /dev/system/root /mnt/gentoo
 btrfs subvolume create /mnt/gentoo/@
 btrfs subvolume create /mnt/gentoo/@home
@@ -218,25 +226,25 @@ btrfs subvolume create /mnt/gentoo/@root
 btrfs subvolume create /mnt/gentoo/@var@log
 btrfs subvolume create /mnt/gentoo/@snapshots
 btrfs subvolume create /mnt/gentoo/@home/.snapshots
-
-#check if all is done correctly
+```
+check if all is done correctly
+```
 btrfs subvolume list /mnt/gentoo
-ID 256 gen 10 top level 5 path @
-ID 257 gen 10 top level 5 path @home
-ID 258 gen 10 top level 5 path @root
-ID 259 gen 10 top level 5 path @var@log
-ID 260 gen 10 top level 5 path @snapshots
-ID 261 gen 10 top level 257 path @home/.snapshots
-
-#set @ as the default subvol
+```
+Set __@__ as the __default__ subvolume
+```
 btrfs subvolume set-default /mnt/gentoo/@
-
-#check if it's set correctly
+```
+check if it's set correctly
+```
 btrfs subvolume get-default /mnt/gentoo
-ID 256 gen 10 top level 5 path @
-
+```
+cleanup
+```
 umount /mnt/gentoo
-#Time to mount everythin at it's place
+```
+#### Mount Filesystems and swap for use in the chroot Environment
+```
 mount -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@ /dev/system/root /mnt/gentoo
 chmod 755 /mnt/gentoo
 mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@root /dev/system/root /mnt/gentoo/root
@@ -244,7 +252,7 @@ mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@var@log /dev/system/r
 mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@snapshots /dev/system/root /mnt/gentoo/.snapshots
 mount -m -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@home /dev/system/root /mnt/gentoo/home
 mount -m -t vfat /dev/vda1 /mnt/gentoo/boot
-swapon /dev/system/swap
+```
 
 #let's bootstrap our new gentoo system
 cd /mnt/gentoo
