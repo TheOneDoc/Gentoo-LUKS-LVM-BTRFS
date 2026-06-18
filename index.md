@@ -27,7 +27,6 @@ Please find one near you via [Gentoo Source Mirrors](https://www.gentoo.org/down
 
 ```
 #Name               Protocol    IPv4/v6	    URL
-#Ionos SE (1&1)     http        IPv4 + IPv6 http://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/
 #Ionos SE (1&1)     https       IPv4 + IPv6 https://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/
 #Ionos SE (1&1)     rsync       IPv4 + IPv6 rsync://eu.mirror.ionos.com/gentoo/
 ```
