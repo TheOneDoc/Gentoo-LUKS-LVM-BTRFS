@@ -196,7 +196,7 @@ The __LVs__ are mapped into the system as ```/dev/{VG}/{LV}``` and ```/dev/mappe
 
 #### Filesystem Creation
 
-Create swap on /dev/system/swap and name it __swapfs__
+Create swap on ```/dev/system/swap``` and name it __swapfs__
 ```
 mkswap /dev/system/swap -L swapfs
 ```
@@ -206,7 +206,7 @@ swapon /dev/system/swap
 ```
 ![](0008.png)
 
-Create BTRFS on /dev/mapper/system-root and name it __rootfs__
+Create BTRFS on ``/dev/mapper/system-root`` and name it __rootfs__
 ```
 mkfs.btrfs -f -L rootfs /dev/mapper/system-root
 ```
