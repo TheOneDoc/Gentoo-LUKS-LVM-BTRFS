@@ -43,27 +43,6 @@ After the system is booted we start with the actual Installation.
 
 ## Installation
 
-### Where to install?
-
-our target device is called __/dev/vda__ because it's a [virtio](https://wiki.osdev.org/Virtio) [block device](https://en.wikipedia.org/wiki/Device_file#Block_devices) other valid targets are
-
-/dev/vd?
-
-/dev/sd?
-
-/dev/nvme?n?
-
-/dev/mmcblk?
-
-Note: replace ? with the number/letter that specifies your target drive
-
-### Target drive partitioning scheme
-```
-/dev/vda
-/dev/vda1, vfat,  EFI System, boot 2.5GB
-/dev/vda2, LUKS,  LVM2,LV=Root,LV=Swap
-```
-
 ### What to install?
 
 Bootsrapping Gentoo is a bit different than other Linux Distributions in so far as it uses a multitude of [Stage Files](https://wiki.gentoo.org/wiki/Stage_file) instead of a single small
@@ -81,7 +60,7 @@ https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/releases/amd64/aut
 
 ### Prepare the Installation Envirnoment
 
-Note:as long as we are in our Installation Envirnoment we will use the [__sudo__](https://en.wikipedia.org/wiki/Sudo) command to execute tasks with root privileges.
+Note:as long as we are in our Installation Envirnoment we will use the [__sudo__](https://en.wikipedia.org/wiki/Sudo) command to execute tasks with superuser (root) privileges.
 
 However within the chroot and our newly installed system we will use [__doas__](https://en.wikipedia.org/wiki/Doas).
 
@@ -97,28 +76,68 @@ useradd -m -G users,wheel uwe
 psswd uwe
 su - uwe
 ```
-#### let's start sshd
+#### (optional) start sshd
 This step can be skipped if the installation is done locally
 ```
 sudo rc-service sshd start
 ```
-#### Get the IP Address of our Install Environment
+#### (optional) get the IP Address of our Install Environment
 ```
 ip a
 ```
+At this point you can either continue the installation locally or ssh into the Installation Environment and continue from remote 
+
+### prepare Installation target
+
+our target device is called __/dev/vda__ because it's a [virtio](https://wiki.osdev.org/Virtio) [block device](https://en.wikipedia.org/wiki/Device_file#Block_devices) other valid targets are
+
+/dev/vd?
+
+/dev/sd?
+
+/dev/nvme?n?
+
+/dev/mmcblk?
+
+Note: replace ? with the number/letter that specifies your target drive
+
+All the following steps need to be performed with superuser (root) privileges
 
 ```
-#now either continue in the console or ssh into the machine
 sudo -i
-#optional
-wipefs -a /dev/vda
-#for NVME SSDs
-nvme sanitize /dev/nvme0 -a 0x02
-#for SATA SSDs, eMMC, SD Cards
-blkdiscard -vfz /dev/vda
+```
 
-#prepare the disk with parted
+#### sanitze the target device
+
+##### (optional) secure erase the target drive
+
+For NVME SSDs perform
+```
+nvme sanitize /dev/nvme0 -a 0x02
+```
+
+For all other block devices perform
+
+Note: This operation can take a long time depending on size and speed of the target drive.
+```
+blkdiscard -vfz /dev/vda
+```
+
+##### Wipe the device
+
+```
+wipefs -a /dev/vda
+```
+
+#### Partitioning the target device
+
+##### Check that the target is in deed empty
+```
 parted /dev/vda print
+```
+
+##### Create the Partion Table and Partitions
+```
 parted /dev/vda mklabel gpt
 parted /dev/vda mkpart primary fat32 0% 2.5GB
 parted /dev/vda name 1 esp
@@ -126,7 +145,22 @@ parted /dev/vda set 1 esp on
 parted /dev/vda set 1 boot on
 parted /dev/vda mkpart primary 2.5GB 100%
 parted /dev/vda name 2 LUKS-crypt
+```
+
+##### Check that the target is correctly partitioned
+```
 parted /dev/vda print
+```
+
+##### Target device partitioning scheme
+
+```
+/dev/vda
+/dev/vda1, vfat,  EFI System, boot 2.5GB
+/dev/vda2, LUKS,  LVM2,LV=Root,LV=Swap
+```
+
+```
 
 #let's take care of the filesystems
 # EFI is combined /boot and EFI so mount point is /boot
