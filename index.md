@@ -62,13 +62,13 @@ https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/releases/amd64/aut
 
 ### Prepare the Installation Envirnoment
 
-Note:as long as we are in our Installation Envirnoment we will use the [__sudo__](https://en.wikipedia.org/wiki/Sudo) command to execute tasks with superuser (root) privileges.
+As long as we are in our Installation Envirnoment we will use the [__sudo__](https://en.wikipedia.org/wiki/Sudo) command to execute tasks with superuser (root) privileges.
 
 However within the chroot and our newly installed system we will use [__doas__](https://en.wikipedia.org/wiki/Doas).
 
 __sudo -i__ ≈ __doas -s__
 
-Open the __Console__ by starting [__Konsole__](https://en.wikipedia.org/wiki/Konsole)
+#### Open the __Console__ by starting [__Konsole__](https://en.wikipedia.org/wiki/Konsole)
 
 #### Set root password and create our install user
 ```
