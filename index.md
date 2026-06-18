@@ -166,7 +166,7 @@ unlock the LUKS Container and map it to __/dev/mapper/crypt__
 ```
 cryptsetup luksOpen /dev/vda2 crypt
 ```
-(optional) enable discards on LUKS
+(optional) enable discards on __LUKS__
 
 SSD/SD/mmc block devices should enable discards
 ```
@@ -175,13 +175,13 @@ cryptsetup refresh --persistent --allow-discards crypt
 
 #### LVM configuration
 
-Create a Volume Group (VG) named __system__ on our mapped LUKS Container
+Create a Volume Group (__VG__) named __system__ on our mapped __LUKS__ Container
 
-Note: the LUKS container serves as Physical Volume (_PV_) for _LVM_.
+Note: the LUKS container serves as Physical Volume (__PV__) for __LVM__.
 ```
 vgcreate system /dev/mapper/crypt
 ```
-We create two Logical Volums (__LV__) in our __system__ __VG__. 
+We create two Logical Volums (__LV__) in our Volume Group (__system__ __VG__). 
 
 The first __LV__ contains our swap. We name it __swap__.
 
@@ -189,7 +189,7 @@ A good size for it is RAM Size * 2.5
 ```
 lvcreate --name swap -L 40G system
 ```
-The Second __LV__ contains or BTRFS File System. We name it __root__. 
+The Second __LV__ contains our __BTRFS__ File System. We name it __root__. 
 ```
 lvcreate --name root -l 100%free system
 ```
