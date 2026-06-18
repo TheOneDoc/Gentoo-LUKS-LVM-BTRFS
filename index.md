@@ -187,7 +187,7 @@ Note: the LUKS container serves as Physical Volume (_PV_) for _LVM_.
 ```
 vgcreate system /dev/mapper/crypt
 ```
-We create two Logical Volums (LV) in our __system__ VG 
+We create two Logical Volums (__LV__) in our __system__ __VG__. 
 
 The first __LV__ contains our swap. We name it __swap__.
 
@@ -195,9 +195,7 @@ A good size for it is RAM Size * 2.5
 ```
 lvcreate --name swap -L 40G system
 ```
-The Second __LV__ contains or BTRFS File System. 
-
-We name it __root__. 
+The Second __LV__ contains or BTRFS File System. We name it __root__. 
 ```
 lvcreate --name root -l 100%free system
 ```
