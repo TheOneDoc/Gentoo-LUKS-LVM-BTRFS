@@ -267,8 +267,9 @@ Reminder: Make sure you use the correct URL for your chosen mirror and stage fil
 ```
 cd /mnt/gentoo
 curl -O https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20260614T170130Z.tar.xz
-tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner -C /mnt/gentoo
+tar xpf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner -C /mnt/gentoo
 ```
+![](0014.png)
 
 ### Copy DNS setting from the Install Environment to the chroot
 
