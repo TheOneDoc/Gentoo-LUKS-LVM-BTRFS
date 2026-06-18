@@ -52,7 +52,9 @@ We make use of the current stage-3 desktop openrc stage file.
 
 Please adjust this URL according to your needs and the latest stage file.
 
-Note: In the context of Gentoo linux __"current"__ refferencs the rolling release and __"stable"__ the milestone release. In this guide we will follow __current__.
+Note: In the context of Gentoo linux __"current"__ refferencs the rolling release and __"stable"__ the milestone release.
+
+In this guide we will follow __current__.
 
 ```
 https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20260614T170130Z.tar.xz
