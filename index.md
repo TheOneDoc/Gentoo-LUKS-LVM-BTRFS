@@ -136,7 +136,7 @@ parted /dev/vda print
 ```
 ![](0004.png)
 
-##### Create the Partion Table and Partitions
+##### Create the Partition Table and Partitions
 ```
 parted /dev/vda mklabel gpt
 parted /dev/vda mkpart primary fat32 0% 2.5GB
@@ -147,7 +147,7 @@ parted /dev/vda mkpart primary 2.5GB 100%
 parted /dev/vda name 2 LUKS-crypt
 ```
 
-##### Check that the target is correctly partitioned
+##### Check that the target device is correctly partitioned
 ```
 parted /dev/vda print
 ```
