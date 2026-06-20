@@ -304,6 +304,8 @@ MAKEOPTS="-j8 -l17"
 LC_MESSAGES=C.UTF-8
 
 GENTOO_MIRRORS="https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/"
+#Tell the sytem we want to run current switch to "AMD64" for stable
+ACCEPT_KEYWORDS="~amd64"
 
 EOF
 ```
