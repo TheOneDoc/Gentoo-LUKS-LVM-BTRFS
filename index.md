@@ -4,7 +4,7 @@
 
 This document will walk you through installing [Gentoo Linux](https://en.wikipedia.org/wiki/Gentoo_Linux)
 with [KDE Plasma](https://kde.org/plasma-desktop/) on top of a [Snapper](http://snapper.io/) ready [__BTRFS__](https://en.wikipedia.org/wiki/Btrfs) file system
-that resides inside a [Logical Vulume Manager](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) (__LVM__) Logical Volume (__LV__) inside a Volume Group (__VG__) 
+that resides inside a [Logical Volume Manager](https://en.wikipedia.org/wiki/Logical_Volume_Manager_(Linux)) (__LVM__) Logical Volume (__LV__) inside a Volume Group (__VG__) 
 inside a encrypted [Linux Unified Key Setup](https://en.wikipedia.org/wiki/Linux_Unified_Key_Setup) (__LUKS__) partition
 
 Note: The configuration and usage of Snapper is out of scope for this document.
@@ -33,13 +33,13 @@ Please find one near you via [Gentoo Source Mirrors](https://www.gentoo.org/down
 #Ionos SE (1&1)     rsync       IPv4 + IPv6 rsync://eu.mirror.ionos.com/gentoo/
 ```
 
-the current Gentoo [LiveGUI USB Image](https://www-cdn.gentoo.org/downloads/amd64/) is our installation envirnoment.
+the current Gentoo [LiveGUI USB Image](https://www-cdn.gentoo.org/downloads/amd64/) is our installation environment.
 
 Please adjust the following URL accordingly as the one in this guide is current as of writing.
 ```
 https://eu.mirror.ionos.com//linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-livegui-amd64/livegui-amd64-20260510T170106Z.iso
 ```
-Now it's time to boot our machine/VM from the installation envirnoment.
+Now it's time to boot our machine/VM from the installation environment.
 
 After the system is booted we start with the actual Installation.
 
@@ -47,14 +47,14 @@ After the system is booted we start with the actual Installation.
 
 ### What to install?
 
-Bootsrapping Gentoo is a bit different than other Linux Distributions in so far as it uses a multitude of [Stage Files](https://wiki.gentoo.org/wiki/Stage_file) instead of a single small
+Bootstrapping Gentoo is a bit different than other Linux Distributions in so far as it uses a multitude of [Stage Files](https://wiki.gentoo.org/wiki/Stage_file) instead of a single small
 base system tarball.
 
 We make use of the current stage-3 desktop openrc stage file.
 
 Please adjust this URL according to your needs and the latest stage file.
 
-Note: In the context of Gentoo linux __"current"__ refferencs the rolling release and __"stable"__ the milestone release.
+Note: In the context of Gentoo Linux __"current"__ references the rolling release and __"stable"__ the milestone release.
 
 In this guide we will follow __current__.
 
@@ -62,9 +62,9 @@ In this guide we will follow __current__.
 https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/releases/amd64/autobuilds/current-stage3-amd64-desktop-openrc/stage3-amd64-desktop-openrc-20260614T170130Z.tar.xz
 ```
 
-### Prepare the Installation Envirnoment
+### Prepare the Installation Environment
 
-As long as we are in our Installation Envirnoment we will use the [__sudo__](https://en.wikipedia.org/wiki/Sudo) command to execute tasks with superuser (root) privileges.
+As long as we are in our Installation Environment we will use the [__sudo__](https://en.wikipedia.org/wiki/Sudo) command to execute tasks with superuser (root) privileges.
 
 However within the chroot and our newly installed system we will use [__doas__](https://en.wikipedia.org/wiki/Doas).
 
@@ -77,7 +77,7 @@ __sudo -i__ ≈ __doas -s__
 sudo -i
 passwd
 useradd -m -G users,wheel uwe
-psswd uwe
+passwd uwe
 su - uwe
 ```
 ![](0001.png)
@@ -112,10 +112,10 @@ our target device is called __/dev/vda__ because it's a [virtio](https://wiki.os
 ```
 Note: replace ? with the number/letter that specifies your target device
 
-#### sanitze the target device
+#### sanitize the target device
 
 ##### Wipe the device
-Remove all Filesystem, RAID and Partition Table signatures from target device
+Remove all File system, RAID and Partition Table signatures from target device
 ```
 wipefs -a /dev/vda
 ```
@@ -168,7 +168,7 @@ cryptsetup luksOpen /dev/vda2 crypt
 ```
 (optional) enable discards on __LUKS__
 
-SSD/SD/mmc block devices should enable discards
+SSD/SD/MMC block devices should enable discards
 ```
 cryptsetup refresh --persistent --allow-discards crypt
 ```
@@ -181,7 +181,7 @@ Note: the Physical Volume (__PV__) creation on LUKS container is implicit.
 ```
 vgcreate system /dev/mapper/crypt
 ```
-We create two Logical Volums (__LV__) in our Volume Group (__VG__) __system__. 
+We create two Logical Volumes (__LV__) in our Volume Group (__VG__) __system__. 
 
 The first __LV__ contains our swap. We name it __swap__.
 
@@ -196,7 +196,7 @@ lvcreate --name root -l 100%free system
 The __LVs__ are mapped into the system as ```/dev/{VG}/{LV}``` and ```/dev/mapper/{VG}-{LV}```
 ![](0007.png)
 
-#### Filesystem Creation
+#### File system Creation
 
 Create swap on ```/dev/system/swap``` and name it __swapfs__
 ```
@@ -214,7 +214,7 @@ mkfs.btrfs -f -L rootfs /dev/mapper/system-root
 ```
 ![](0009.png)
 
-Create the BTRFS Subvolums
+Create the BTRFS Subvolumes
 ```
 mount -v -t btrfs -o ssd,compress=zstd:11,subvol=/ /dev/system/root /mnt/gentoo
 btrfs subvolume create /mnt/gentoo/@
@@ -245,7 +245,7 @@ cleanup
 ```
 umount /mnt/gentoo
 ```
-#### Mount Filesystems for use in the chroot Environment
+#### Mount File systems for use in the chroot Environment
 ```
 mount -t btrfs -o compress=zstd:11,ssd,noatime,subvol=/@ /dev/system/root /mnt/gentoo
 chmod 755 /mnt/gentoo
@@ -263,7 +263,7 @@ findmnt -R /mnt/gentoo
 
 ### Bootstrap Gentoo Linux
 
-Consult the [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage) for vaildation steps and in depth explanations.
+Consult the [Gentoo Handbook](https://wiki.gentoo.org/wiki/Handbook:AMD64/Installation/Stage) for validation steps and in depth explanations.
 
 Reminder: Make sure you use the correct URL for your chosen mirror and stage file.
 ```
@@ -285,7 +285,7 @@ a 8 Cores 16 Threads x86-64-3 system with 32 GB of RAM
 Note: Don't forget to set __Gentoo_Mirrors=__ to your local mirror
 
 ```
-cat <<'EOF' >  /etc/portage/make.conf
+cat << 'EOF' >  /etc/portage/make.conf
 # Please consult /usr/share/portage/config/make.conf.example for a more
 # detailed example.
 COMMON_FLAGS="-march=x86-64-v3 -O2 -pipe"
@@ -304,7 +304,7 @@ MAKEOPTS="-j8 -l17"
 LC_MESSAGES=C.UTF-8
 
 GENTOO_MIRRORS="https://eu.mirror.ionos.com/linux/distributions/gentoo/gentoo/"
-#Tell the sytem we want to run current switch to "AMD64" for stable
+#Tell thesystem we want to run current switch to "AMD64" for stable
 ACCEPT_KEYWORDS="~amd64"
 
 EOF
@@ -423,7 +423,7 @@ The most commonly used GPUs are
 echo "*/* VIDEO_CARDS: -* virgl" > /etc/portage/package.use/00video_cards
 ```
 
-##### Set the acceptable licences
+##### Set the acceptable licenses
 ```
 echo 'ACCEPT_LICENSE="-* @FREE @BINARY-REDISTRIBUTABLE"' >> /etc/portage/make.conf
 ```
@@ -463,7 +463,7 @@ For the news module, three operations are most used:
 emerge --ask --pretend --depclean
 emerge --ask --depclean
 ```
-##### User Configuratiom
+##### User Configuration
 
 Set root user account password
 ```
@@ -631,7 +631,7 @@ emerge --ask dev-python/zstandard
 emerge --ask sys-block/io-scheduler-udev-rules
 ```
 
-##### Install the Logical Vulume Manager
+##### Install the Logical Volume Manager
 
 Set the USAGE flag
 ```
