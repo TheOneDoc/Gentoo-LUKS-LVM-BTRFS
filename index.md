@@ -811,17 +811,18 @@ sudo reboot
 ```
 ![The End Result](0023.png)
 
+## QEMU KVM config
 ```
 <domain type="kvm">
-  <name>Gentoo2</name>
+  <name>Gentoo</name>
   <uuid>d33ee995-4d99-4763-a888-e4f0166dc495</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://almalinux.org/almalinux/10"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit="KiB">33554432</memory>
-  <currentMemory unit="KiB">16777216</currentMemory>
+  <memory unit="KiB">31250432</memory>
+  <currentMemory unit="KiB">15625216</currentMemory>
   <memoryBacking>
     <source type="memfd"/>
     <access mode="shared"/>
@@ -834,8 +835,8 @@ sudo reboot
       <feature enabled="no" name="secure-boot"/>
     </firmware>
     <loader readonly="yes" type="pflash" format="raw">/usr/share/OVMF/OVMF_CODE_4M.fd</loader>
-    <nvram template="/usr/share/OVMF/OVMF_VARS_4M.fd" templateFormat="raw" format="raw">/var/lib/libvirt/qemu/nvram/Gentoo2_VARS.fd</nvram>
-    <bootmenu enable="yes"/>
+    <nvram template="/usr/share/OVMF/OVMF_VARS_4M.fd" templateFormat="raw" format="raw">/var/lib/libvirt/qemu/nvram/Gentoo_VARS.fd</nvram>
+    <bootmenu enable="no"/>
   </os>
   <features>
     <acpi/>
@@ -859,17 +860,15 @@ sudo reboot
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type="file" device="cdrom">
       <driver name="qemu" type="raw"/>
-      <source file="/srv/mergerfs/pool1/data/Workspace/ISOs/livegui-amd64-20260510T170106Z.iso"/>
       <target dev="sda" bus="sata"/>
       <readonly/>
-      <boot order="1"/>
       <address type="drive" controller="0" bus="0" target="0" unit="0"/>
     </disk>
     <disk type="block" device="disk">
       <driver name="qemu" type="raw" cache="directsync" io="native" discard="unmap"/>
       <source dev="/dev/VMs/gentoo_delme"/>
       <target dev="vda" bus="virtio"/>
-      <boot order="2"/>
+      <boot order="1"/>
       <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
     </disk>
     <controller type="usb" index="0" model="qemu-xhci" ports="15">
@@ -977,9 +976,6 @@ sudo reboot
       <target type="virtio" name="com.redhat.spice.0"/>
       <address type="virtio-serial" controller="0" bus="0" port="2"/>
     </channel>
-    <input type="tablet" bus="usb">
-      <address type="usb" bus="0" port="1"/>
-    </input>
     <input type="mouse" bus="ps2"/>
     <input type="keyboard" bus="ps2"/>
     <tpm model="tpm-crb">
@@ -993,7 +989,9 @@ sudo reboot
     </sound>
     <audio id="1" type="spice"/>
     <video>
-      <model type="virtio" heads="1" primary="yes"/>
+      <model type="qxl" ram="65536" vram="65536" vgamem="16384" heads="1" primary="yes">
+        <acceleration accel3d="no"/>
+      </model>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x01" function="0x0"/>
     </video>
     <redirdev bus="usb" type="spicevmc">
@@ -1012,4 +1010,5 @@ sudo reboot
     </rng>
   </devices>
 </domain>
+
 ```
