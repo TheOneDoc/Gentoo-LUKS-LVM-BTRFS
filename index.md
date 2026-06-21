@@ -736,6 +736,17 @@ emerge sys-process/btop
 emerge app-misc/fastfetch
 emerge app-misc/tmux
 ```
+
+##### (optional) QEMU/KVM VM guest agent services
+```
+emerge --ask app-emulation/spice-vdagent
+emerge --ask app-emulation/qemu-guest-agent
+rc-update add spice-vdagent default
+rc-service spice-vdagent start
+rc-update add qemu-guest-agent default
+rc-service qemu-guest-agent start
+```
+
 ##### Install KDE
 ```
 emerge --ask kde-plasma/plasma-meta kde-apps/kde-apps-meta
