@@ -130,7 +130,7 @@ For more on secure wipe consult the [Gentoo Handbook](https://wiki.gentoo.org/wi
 
 #### Partitioning the target device
 
-##### Check that the target is in deed empty
+##### Check that the target is indeed empty
 ```
 parted /dev/vda print
 ```
